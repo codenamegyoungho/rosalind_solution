@@ -70,21 +70,4 @@ for i in range(len(front)):
         print(front[i][s][1:],front[i][s+1][1:])
 
 
-
-
-
-
-
-# for k,v in front.items():
-#     if k == v:
-#         double.append(k)
-# for i in double:
-#     del front[i] 
-# print(front)
-
-#####앞을 기준으로 뒤를 분석
-# for i in range(len(tu)):
-#     for s in range(1,len(tu)):
-#         if tu[i][1][:3] == tu[s][1][len(tu[s][1])-3:]:
-#             back[tu[i]] = tu[s]
         
