@@ -1,4 +1,7 @@
->Rosalind_14
-ACGTACGTGACG
->Rosalind_18
-GTA
+10
+1 2
+2 8
+4 10
+5 9
+6 10
+7 9
