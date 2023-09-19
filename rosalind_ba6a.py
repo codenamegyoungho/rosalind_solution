@@ -1,35 +1,46 @@
-import re
-import pdb
+import time 
+def abs(num):
+    return num if num > 0 else -num
 
-with open('rosalind_ba6a.txt','r') as f:
-    tuples = f.readline().strip()
-    numbers = re.findall(r'[-+]\d+', tuples)
-    # print(numbers)
-def reversing_index(numbers,시작값,끝값):
-    numbers = numbers[:시작값] + numbers[시작값:끝값+1][::-1] + numbers[끝값+1:]
-    return numbers
+def greedy_sorting(perm):
+    result = []
+    length = len(perm)
+    i = 0
+    comp = sorted(list(map(lambda x: x if x >= 0 else -x, perm)))
+    while i < length:
+        if abs(comp[i]) != perm[i]:
+            idx = perm.index(comp[i]) if perm.count(comp[i]) else perm.index(-comp[i])
+            perm = perm[:i] + [-x for x in perm[i:idx+1][::-1]] + perm[idx+1:]
+            result.append(perm)
+            if perm[i] < 0:
+                perm = perm[:i] + [-perm[i]] + perm[i+1:]
+                result.append(perm)
+        i += 1
+    return result
 
-def changing_부호(numbers,시작값,끝값):
-    for i in range(시작값,끝값+1):
-        if numbers[i][0] == '+':
-            numbers[i] = '-' + numbers[i][1:]
-        elif numbers[i][0] == '-':
-            numbers[i] = '+' + numbers[i][1:]
-    return numbers
+def ugly_print(lls):
+    for ls in lls:
+        line = []
+        for num in ls:
+            if num > 0:
+                line.append('+' + str(num))
+            else:
+                line.append(str(num))
+        print('(' + ' '.join(line) + ')')
 
 
-시작값 = 0
-with open('rosalind_ba6a_answer.txt','w') as f:
-    for i in range(len(numbers)):
+
+def main():
+    with open('rosalind_ba6a.txt','r') as f:
+        lines = [line.strip() for line in f.readlines()]
+        perm_str = lines[0].strip('(').strip(')').split()
+        perm_int = list(map(int, perm_str))
         
-        원하는값 = i+1
-        # pdb.set_trace()
-        원하는값index = [i for i,value in enumerate(numbers) if 원하는값 == int(value[1:])]
-        
-        numbers = reversing_index(numbers,시작값,원하는값index[0])
-        numbers = changing_부호(numbers,시작값,원하는값index[0])
-        시작값 += 1
-        f.write('('+' '.join(numbers)+')' + '\n') 
-        if numbers[i][0] == '-':
-            numbers[i] = '+' + numbers[i][1:]
-            f.write('('+' '.join(numbers)+')' + '\n') 
+
+    lls = greedy_sorting(perm_int)
+    ugly_print(lls)
+# print(main())
+
+
+if __name__ == '__main__':
+    main()
